@@ -15,17 +15,23 @@ public class ClientPresence {
 
 	public static void main(String[] args) throws IOException {
 
-		//ClientPresence.notifyConnexion();
-		ClientPresence.getConnectedUser();
+		ClientPresence.notifyConnexion();
+		//ClientPresence.getConnectedUser();
 
 
 	}
 	
 	public static void notifyConnexion ()
 	{
-		String URL = GET_URL + "/toto?status=Connexion&user=Evan";
+		String URL = GET_URL + "/toto?status=Connexion&user=Evan&IP=10.5.2.2";
+		String resp = null;
 		try {
-			sendGET(URL);
+			resp = sendGET(URL);
+			System.out.println(resp);
+			String[] tabUser = resp.split("&&");
+			System.out.println(tabUser[2]);
+			
+			
 		}
 		catch(Exception e)
 		{
@@ -36,8 +42,10 @@ public class ClientPresence {
 	public static void getConnectedUser ()
 	{
 		String URL = GET_URL + "/toto?status=Check";
+		String resp = null;
 		try {
-			sendGET(URL);
+			resp = sendGET(URL);
+			System.out.println(resp);
 		}
 		catch(Exception e)
 		{
@@ -45,12 +53,13 @@ public class ClientPresence {
 		}
 	}
 
-	private static void sendGET(String URL) throws IOException {
+	private static String sendGET(String URL) throws IOException {
 		URL obj = new URL(URL);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		int responseCode = con.getResponseCode();
+		String resp = null;
 		//System.out.println("GET Response Code :: " + responseCode);
 		if (responseCode == HttpURLConnection.HTTP_OK) { // success
 			BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -64,11 +73,12 @@ public class ClientPresence {
 			in.close();
 
 			// print result
-			System.out.println(response.toString());
+			resp = response.toString();
+			//System.out.println(response.toString());
 		} else {
 			System.out.println("GET request not worked");
 		}
-
+		return resp;
 	}
 	
 	
