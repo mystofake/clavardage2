@@ -1,8 +1,11 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.Socket;
 import java.net.URL;
 
 public class ClientPresence {
@@ -23,14 +26,48 @@ public class ClientPresence {
 	
 	public static void notifyConnexion ()
 	{
-		String URL = GET_URL + "/toto?status=Connexion&user=Evan&IP=10.5.2.2";
+		String URL = GET_URL + "/PresenceServer?status=Connexion&user=Evan&IP=10.5.2.2";
 		String resp = null;
+		int port;
 		try {
 			resp = sendGET(URL);
-			System.out.println(resp);
-			String[] tabUser = resp.split("&&");
-			System.out.println(tabUser[2]);
+			port = Integer.parseInt(resp);
+			System.out.println(port);
+			Socket MySocket = new Socket("localhost",port);
 			
+			ObjectInputStream inObject = null;
+			ObjectOutputStream outObject = null;
+			
+			UserPresence u = null;
+
+			try 
+			{
+			outObject = new ObjectOutputStream (MySocket.getOutputStream());	
+			inObject = new ObjectInputStream (MySocket.getInputStream());		
+			}
+			catch (IOException e)
+			{
+				System.out.println("ERROR FUNCTION : outStream");
+			}
+			
+			try 
+			{
+
+					while (u == null)
+						u = (UserPresence) inObject.readObject();
+			}
+			catch ( IOException e )
+			{
+				System.out.println("ERROR FUNCTION : recupMessage - IOException");
+			}
+			catch (ClassNotFoundException e)
+			{
+				System.out.println("ERROR FUNCTION : recupMessage - ClassnotfounException");
+			}
+			
+			System.out.println(u);
+			
+
 			
 		}
 		catch(Exception e)
@@ -41,7 +78,7 @@ public class ClientPresence {
 	
 	public static void getConnectedUser ()
 	{
-		String URL = GET_URL + "/toto?status=Check";
+		String URL = GET_URL + "/PresenceServer?status=Check";
 		String resp = null;
 		try {
 			resp = sendGET(URL);
