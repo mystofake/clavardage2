@@ -38,12 +38,12 @@ public class ClientPresence {
 			ObjectInputStream inObject = null;
 			ObjectOutputStream outObject = null;
 			
-			UserPresence u = null;
+			String u = null;
 
 			try 
 			{
-			outObject = new ObjectOutputStream (MySocket.getOutputStream());	
-			inObject = new ObjectInputStream (MySocket.getInputStream());		
+				outObject = new ObjectOutputStream (MySocket.getOutputStream());	
+				inObject = new ObjectInputStream (MySocket.getInputStream());		
 			}
 			catch (IOException e)
 			{
@@ -54,7 +54,8 @@ public class ClientPresence {
 			{
 
 					while (u == null)
-						u = (UserPresence) inObject.readObject();
+						u = (String) inObject.readObject();
+					
 			}
 			catch ( IOException e )
 			{
