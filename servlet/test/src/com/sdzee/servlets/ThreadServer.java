@@ -15,7 +15,7 @@ public class ThreadServer extends Thread {
 	public ThreadServer(int port)
 	{
 		this.port = port;
-		this.run();
+		//this.run();
 	}
 	
 	public void init()
@@ -28,12 +28,17 @@ public class ThreadServer extends Thread {
 			outObject = new ObjectOutputStream (MySocket.getOutputStream());	
 			inObject = new ObjectInputStream (MySocket.getInputStream());	
 			
-			outObject.writeObject("Test");
+			//outObject.writeObject("Test");
 		}
 		catch (IOException e)
 		{
 			System.out.println("ERROR FUNCTION : outStream");
 		}
+	}
+	
+	public ObjectOutputStream getOutObject()
+	{
+		return this.outObject;
 	}
 	
 	public void run()

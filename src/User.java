@@ -3,19 +3,28 @@ import java.io.*;
 import java.net.*;
 
 
-//La classe User récapitule les données essentielles sur un User du système de Clavardage.
-//Elle est serializable puisqu'elle sera broadcastée à chaque nouvelle connexion.
+//La classe User rï¿½capitule les donnï¿½es essentielles sur un User du systï¿½me de Clavardage.
+//Elle est serializable puisqu'elle sera broadcastï¿½e ï¿½ chaque nouvelle connexion.
 
 public class User implements Serializable{
 
 	private String pseudo;
 	private boolean onlineState;
 	private InetAddress AddUser;
+	private boolean Distant;
 	
 	public User(String pseudo, InetAddress AddUser) {
 		this.pseudo = pseudo;  
 		this.onlineState = true;
 		this.AddUser = AddUser;
+		this.Distant = false;
+	}
+	
+	public User(String pseudo, InetAddress AddUser, boolean Distant) {
+		this.pseudo = pseudo;  
+		this.onlineState = true;
+		this.AddUser = AddUser;
+		this.Distant = Distant;
 	}
 	
 	public User(String pseudo) {

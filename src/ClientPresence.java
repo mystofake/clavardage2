@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 
@@ -13,20 +14,34 @@ public class ClientPresence {
 
 	private static  String USER_AGENT = "Mozilla/5.0";
 
-	private static  String GET_URL = "http://localhost:8080/test";
+	private String GET_URL = "http://localhost:8080/test";
 
+	private ObjectInputStream inObject = null;
+	private ObjectOutputStream outObject = null;
+	
+	private Controler c;
 
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 
 		ClientPresence.notifyConnexion();
 		//ClientPresence.getConnectedUser();
 
 
+	}*/
+	
+	public ClientPresence(Controler c)
+	{
+		this.c = c;
 	}
 	
-	public static void notifyConnexion ()
+	public void setServerIP(String IPAddress)
 	{
-		String URL = GET_URL + "/PresenceServer?status=Connexion&user=Evan&IP=10.5.2.2";
+		this.GET_URL= "http://"+IPAddress+":8080/test";
+	}
+	
+	public void notifyConnexion ()
+	{
+		String URL = GET_URL + "/PresenceServer?status=Connexion&user=" +c.mainUser.getPseudo() +"&IP=10.1.2.3";
 		String resp = null;
 		int port;
 		try {
@@ -34,9 +49,8 @@ public class ClientPresence {
 			port = Integer.parseInt(resp);
 			System.out.println(port);
 			Socket MySocket = new Socket("localhost",port);
-			
-			ObjectInputStream inObject = null;
-			ObjectOutputStream outObject = null;
+			System.out.println("Notfiy : "+c.mainUser.getAddress().toString());
+
 			
 			String u = null;
 
@@ -66,8 +80,18 @@ public class ClientPresence {
 				System.out.println("ERROR FUNCTION : recupMessage - ClassnotfounException");
 			}
 			
-			System.out.println(u);
-			
+			// On reçoit une chaine de type Evan@/195.5.1.1&&Loic@/193.168.1.2&&
+
+			String[] tabUserList = u.split("&&");
+
+			for(int i=0; i<tabUserList.length;i++)
+			{
+				// Chaque élément de tabUserList est de type Evan@/195.5.1.1
+				String[] tabUser = tabUserList[i].split("@");
+				// Un tabUser par User avec premier élément : pseudo - deuxième élément : IP
+				User Test = new User(tabUser[0],InetAddress.getByName(tabUser[1].substring(1)));
+				System.out.println(tabUser[0]+ "@" + tabUser[1]);
+			}
 
 			
 		}
@@ -77,7 +101,12 @@ public class ClientPresence {
 		}
 	}
 	
-	public static void getConnectedUser ()
+	public static void notifyDeconnexion()
+	{
+		
+	}
+	
+	public void getConnectedUser ()
 	{
 		String URL = GET_URL + "/PresenceServer?status=Check";
 		String resp = null;

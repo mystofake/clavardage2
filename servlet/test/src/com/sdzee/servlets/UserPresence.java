@@ -6,6 +6,7 @@ public class UserPresence implements Serializable {
 	private String userName;
 	private boolean onlineState;
 	private InetAddress addr;
+	private ThreadServer serv;
 	
 	public UserPresence(String userName, InetAddress addr)
 	{
@@ -19,6 +20,21 @@ public class UserPresence implements Serializable {
 		return this.userName;
 	}
 	
+	public String getAddr()
+	{
+		return this.addr.toString();
+	}
+	
+	public void setThreadServer(ThreadServer serv)
+	{
+		this.serv = serv;
+	}
+	
+	
+	public ThreadServer getThreadServer()
+	{
+		return serv;
+	}
 	public String toString()
 	{
 		return this.userName + "@"+ this.addr.toString();

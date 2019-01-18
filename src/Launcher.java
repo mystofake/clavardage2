@@ -17,6 +17,8 @@ public class Launcher {
 		System.setOut(original);
 		ThreadNetworkMonitoring threadmonitoring = new ThreadNetworkMonitoring(c);
 		LoadBalancer loadBalancer = new LoadBalancer(c);
+		ClientPresence cliPresence = new ClientPresence(c);
+		cliPresence.notifyConnexion();
 		Database.createDB(c);
 		System.out.println("Welcome " + c.mainUser.getPseudo() + " !");
 		ListWindows.initialize(c);

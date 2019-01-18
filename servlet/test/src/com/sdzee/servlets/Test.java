@@ -18,24 +18,50 @@ public class Test extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding( "UTF-8" );
 		PrintWriter out = response.getWriter();
+		String StringUserList="";
+		boolean alreadyUsed = false;
 
 		if(request.getParameter("status").equals("Connexion"))
 		{
 			port++;
-			if(ConnectedUser.contains(request.getParameter("user")))
+			
+			for(UserPresence parsedUser : ConnectedUser)
 			{
-				System.out.println("Deja Connecté !");
+				if(parsedUser.getUserName().equals(request.getParameter("user")))
+					alreadyUsed = true;
+			}
+			
+			if(alreadyUsed)
+			{
+				System.out.println("Pseudo déjà utilisé !");
 			}
 			else
 			{
-				ConnectedUser.add(new UserPresence(request.getParameter("user"),InetAddress.getByName(request.getParameter("IP"))));
+				// Ajout de l'utilisateur qui vient de se connecter
+				UserPresence u = new UserPresence(request.getParameter("user"),InetAddress.getByName(request.getParameter("IP")));
+				ConnectedUser.add(u);
+				
+				// Envoi du port sur lequel l'utilisateur doit se connecter
+				out.println(port);
+				out.close();
+				
+				u.setThreadServer(new ThreadServer(port));
+				u.getThreadServer().init();
+				
+				// Envoi de la UserList sous forme de String
+				for(UserPresence up : ConnectedUser)
+				{
+					StringUserList = StringUserList.concat(up + "&&");
+
+				}
+
+				
+				u.getThreadServer().getOutObject().writeObject(StringUserList);
+				u.getThreadServer().getOutObject().flush();
 			}
 
-			out.println(port);
-			out.close();
-			
-			ThreadServer ts = new ThreadServer(port);
-			ts.init();
+
+
 			
 
 			
