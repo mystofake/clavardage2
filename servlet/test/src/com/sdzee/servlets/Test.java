@@ -34,6 +34,11 @@ public class Test extends HttpServlet {
 			if(alreadyUsed)
 			{
 				System.out.println("Pseudo déjà utilisé !");
+				
+				//On envoie 0 pour dire que le pseudo est déjà utilisé
+				out.println(0);
+				out.close();
+				
 			}
 			else
 			{

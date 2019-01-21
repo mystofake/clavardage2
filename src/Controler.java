@@ -73,7 +73,7 @@ public Controler(){
 	        DatagramSocket dSock1 = new DatagramSocket(1237);
 	    	NetworkEvent NwEv2 = new NetworkEvent(this.mainUser,"Deconnexion");
 			byte data[] = NetworkFunctions.convertToBytes(NwEv2);
-			DatagramPacket toSend =new DatagramPacket(data,data.length,Adressage.getBroad(this.mainUser.getAddress()),1235);
+			DatagramPacket toSend = new DatagramPacket(data,data.length,Adressage.getBroad(this.mainUser.getAddress()),1235);
 			dSock1.send(toSend);
 	        this.connected = false;
 	        dSock1.close();

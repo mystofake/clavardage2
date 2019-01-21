@@ -48,51 +48,58 @@ public class ClientPresence {
 			resp = sendGET(URL);
 			port = Integer.parseInt(resp);
 			System.out.println(port);
-			Socket MySocket = new Socket("localhost",port);
-			System.out.println("Notfiy : "+c.mainUser.getAddress().toString());
-
 			
-			String u = null;
-
-			try 
+			if(port == 0 )
 			{
-				outObject = new ObjectOutputStream (MySocket.getOutputStream());	
-				inObject = new ObjectInputStream (MySocket.getInputStream());		
+				WarningWindow.ShowWarn("Pseudo déjà utilisé !");
 			}
-			catch (IOException e)
+			else
 			{
-				System.out.println("ERROR FUNCTION : outStream");
+				Socket MySocket = new Socket("localhost",port);
+				System.out.println("Notfiy : "+c.mainUser.getAddress().toString());
+	
+				
+				String u = null;
+	
+				try 
+				{
+					outObject = new ObjectOutputStream (MySocket.getOutputStream());	
+					inObject = new ObjectInputStream (MySocket.getInputStream());		
+				}
+				catch (IOException e)
+				{
+					System.out.println("ERROR FUNCTION : outStream");
+				}
+				
+				try 
+				{
+	
+						while (u == null)
+							u = (String) inObject.readObject();
+						
+				}
+				catch ( IOException e )
+				{
+					System.out.println("ERROR FUNCTION : recupMessage - IOException");
+				}
+				catch (ClassNotFoundException e)
+				{
+					System.out.println("ERROR FUNCTION : recupMessage - ClassnotfounException");
+				}
+				
+				// On reçoit une chaine de type Evan@/195.5.1.1&&Loic@/193.168.1.2&&
+	
+				String[] tabUserList = u.split("&&");
+	
+				for(int i=0; i<tabUserList.length;i++)
+				{
+					// Chaque élément de tabUserList est de type Evan@/195.5.1.1
+					String[] tabUser = tabUserList[i].split("@");
+					// Un tabUser par User avec premier élément : pseudo - deuxième élément : IP
+					User Test = new User(tabUser[0],InetAddress.getByName(tabUser[1].substring(1)));
+					System.out.println(tabUser[0]+ "@" + tabUser[1]);
+				}
 			}
-			
-			try 
-			{
-
-					while (u == null)
-						u = (String) inObject.readObject();
-					
-			}
-			catch ( IOException e )
-			{
-				System.out.println("ERROR FUNCTION : recupMessage - IOException");
-			}
-			catch (ClassNotFoundException e)
-			{
-				System.out.println("ERROR FUNCTION : recupMessage - ClassnotfounException");
-			}
-			
-			// On reçoit une chaine de type Evan@/195.5.1.1&&Loic@/193.168.1.2&&
-
-			String[] tabUserList = u.split("&&");
-
-			for(int i=0; i<tabUserList.length;i++)
-			{
-				// Chaque élément de tabUserList est de type Evan@/195.5.1.1
-				String[] tabUser = tabUserList[i].split("@");
-				// Un tabUser par User avec premier élément : pseudo - deuxième élément : IP
-				User Test = new User(tabUser[0],InetAddress.getByName(tabUser[1].substring(1)));
-				System.out.println(tabUser[0]+ "@" + tabUser[1]);
-			}
-
 			
 		}
 		catch(Exception e)

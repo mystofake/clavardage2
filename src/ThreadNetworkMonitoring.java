@@ -28,8 +28,7 @@ public class ThreadNetworkMonitoring extends Thread {
 		
 		//ServerSocket NetworkWatcher = new ServerSocket(1235); // Serveur d'inizialition 
 		System.out.println("NetworkWatcher : LAUNCHED ON PORT 1235");
-        String multiCastAddress = "230.0.0.0";
-        String multiCastAddress1 = "231.0.0.0";
+
         final int multiCastPort = 1235;
         final int bufferSize = 1024; //Maximum size of transfer object
 		boolean first_deco = true;
@@ -62,17 +61,8 @@ public class ThreadNetworkMonitoring extends Thread {
 				    NwEv = (NetworkEvent) readObject;
 				    
 
-				    //if(ReceivedUser.getAddress().getHostAddress().equals(InetAddress.getLocalHost().getHostAddress())==false)
-				    	//{
-				    		//if (ReceivedUser.getPseudo().equals(c.mainUser.getPseudo()))
-				    		//{
-				    		//ListWindows.PrintMainUser(new User("ERROR"));
-				    		//c.userList.addToConnectedUser(ReceivedUser);
-				    		//}
-				    		//else
-				    		//{
 				    
-				    System.out.println(NwEv.getEvent());
+				    //System.out.println(NwEv.getEvent());
 				    
 
 				    if(NwEv.isConnexion() && !(NwEv.getUser().getAddress().equals(c.mainUser.getAddress())))
@@ -109,7 +99,7 @@ public class ThreadNetworkMonitoring extends Thread {
 				    		if(NwEv.getUser().getPseudo().equals(c.mainUser.getPseudo()) && !NwEv.getUser().getAddress().equals(c.mainUser.getAddress()))
 		    				{
 				    			System.out.println("Username already used - Change username");
-				    			
+				    			WarningWindow.ShowWarn("Username already used - Change username");
 				    			c.deconnect();
 		    				}
 				    		
@@ -123,18 +113,7 @@ public class ThreadNetworkMonitoring extends Thread {
 			    		}
 				    
 				    
-				    // Si connexion + meme pseudo + discrimination sur adresse ip pour pas se rep a soi meme
 
-				    
-				    /*if(NwEv.isChangeUser() && !NwEv.getUser().getPseudo().equals(c.mainUser.getPseudo()))
-			    		{
-				    		System.out.println("Receive Changed user : " + NwEv.getUser().getPseudo() + " CHANGED USERNAME");
-				    		c.userList.removeToConnectedUserByAddress(NwEv.getUser());
-				    		c.userList.addToConnectedUser(NwEv.getUser());
-			    		}*/
-
-				    		//}
-						//}
 				   
 					} 
 				catch (Exception e) {
