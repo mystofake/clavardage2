@@ -104,10 +104,13 @@ public class ListWindows {
 		int i = 1;
 		for(User u :c.userList.connectedUser)
 		{
-			System.out.println("Button "+i);
+			//System.out.println("Button "+i);
 			JButton current_button = new JButton();
 			button_chat.add(current_button);
-			current_button.setText(u.getPseudo());			
+			if(u.isDistant())
+				current_button.setText(u.getPseudo() + "- DISTANT @ " + u.getAddress().toString());			
+			else
+				current_button.setText(u.getPseudo() + "- LOCAL");	
 			
 			fieldConstraints.gridx=1;
 			fieldConstraints.gridy=i-1;

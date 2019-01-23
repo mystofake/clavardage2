@@ -44,7 +44,7 @@ public class Test extends HttpServlet {
 			{
 				// Ajout de l'utilisateur qui vient de se connecter
 				UserPresence u = new UserPresence(request.getParameter("user"),InetAddress.getByName(request.getParameter("IP")));
-				ConnectedUser.add(u);
+				
 				
 				// Envoi du port sur lequel l'utilisateur doit se connecter
 				out.println(port);
@@ -52,6 +52,8 @@ public class Test extends HttpServlet {
 				
 				u.setThreadServer(new ThreadServer(port));
 				u.getThreadServer().init();
+				
+				ConnectedUser.add(u);
 				
 				// Envoi de la UserList sous forme de String
 				for(UserPresence up : ConnectedUser)
@@ -67,11 +69,6 @@ public class Test extends HttpServlet {
 
 
 
-			
-
-			
-
-			
 			
 		}
 		else if(request.getParameter("status").equals("Check"))

@@ -53,6 +53,11 @@ public class User implements Serializable{
 		this.AddUser = add;
 	}
 	
+	public boolean isDistant()
+	{
+		return this.Distant;
+	}
+	
 	 public static User recupUser(ObjectInputStream in)
 	  {	  
 		  User user = null;

@@ -25,31 +25,30 @@ public class Controler {
 	public boolean ready = true;
 	public User mainUser;
 	public UserList userList;
+	public boolean presence_server;
 
 
 	
 
 	
-public Controler(){
+	public Controler(){
+		
+		userList = new UserList();
 	
-	userList = new UserList();
-
-}
-
+	}
 	
-	
+		
+	/* Send Connected to the others users */
 	public void init() 
 	{
-        final int BroadCastPort = 1236;
-        final int multiCastPort = 1235;
-        
+	    final int BroadCastPort = 1236;
+	    final int multiCastPort = 1235;
+	    
 	try {
-
-        /*******Send Connected************/
 		
 		DatagramSocket dSock2 = new DatagramSocket(BroadCastPort);
 		
-		mainUser.SetAddress(Adressage.getIP());
+		//mainUser.SetAddress(Adressage.getIP()); Already done before
 		System.out.println("Set IP : " + mainUser.getAddress());
 		NetworkEvent NwEv = new NetworkEvent(mainUser,"Connexion");
 		
@@ -58,43 +57,40 @@ public Controler(){
 		dSock2.send(toSend);
 		
 		dSock2.close();	
-        
+	    
 		
 	}
 	catch (IOException e) {
 		System.out.println("ERROR FUNCTION : ControllerInit");}
-		}
+	}
 	
-
-		public void deconnect()
+	/* Send Disconnected to the others users */	
+	public void deconnect()
 	{
-		try
-		{
-	        DatagramSocket dSock1 = new DatagramSocket(1237);
-	    	NetworkEvent NwEv2 = new NetworkEvent(this.mainUser,"Deconnexion");
+		try			{
+			DatagramSocket dSock1 = new DatagramSocket(1237);
+			NetworkEvent NwEv2 = new NetworkEvent(this.mainUser,"Deconnexion");
 			byte data[] = NetworkFunctions.convertToBytes(NwEv2);
 			DatagramPacket toSend = new DatagramPacket(data,data.length,Adressage.getBroad(this.mainUser.getAddress()),1235);
 			dSock1.send(toSend);
-	        this.connected = false;
-	        dSock1.close();
-		}
-		catch (Exception e)
-		{
+			this.connected = false;
+			dSock1.close();
+			}
+		catch (Exception e)			{
 			System.out.println("Erreur lors de la deconnexion");
-		}
+			}
 	}
 	
+	/* Disconnection of the current user - Create new User - Send connected */
 	public void changeUsername(String pseudo)
 	{
-		try
-		{
+		try		{
 			this.deconnect();
 			this.mainUser = new User(pseudo);
 			this.connected = true;
 			this.init();
 		}
-		catch (Exception e)
-		{
+		catch (Exception e)		{
 			System.out.println("Erreur lors du changement de pseudo");
 		}
 	}
