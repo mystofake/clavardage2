@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 
-public class ClientPresence {
+public class ClientPresence extends Thread {
 
 
 	private static  String USER_AGENT = "Mozilla/5.0";
@@ -41,7 +41,8 @@ public class ClientPresence {
 	
 	public void notifyConnexion ()
 	{
-		String URL = GET_URL + "/PresenceServer?status=Connexion&user=" +c.mainUser.getPseudo() +"&IP=" + c.mainUser.getAddress().toString();
+		System.out.println("Test : " + c.mainUser.getAddress().toString().substring(1));
+		String URL = GET_URL + "/PresenceServer?status=Connexion&user=" +c.mainUser.getPseudo() +"&IP=" +c.mainUser.getAddress().toString().substring(1);
 		String resp = null;
 		int port;
 		try {
@@ -95,11 +96,14 @@ public class ClientPresence {
 				{
 					// Chaque élément de tabUserList est de type Evan@/195.5.1.1
 					String[] tabUser = tabUserList[i].split("@");
+				
 					// Un tabUser par User avec premier élément : pseudo - deuxième élément : IP
 					User Test = new User(tabUser[0],InetAddress.getByName(tabUser[1].substring(1)), true);
 					System.out.println(tabUser[0]+ "@" + tabUser[1]);
-					c.userList.addToConnectedUser(Test);
-					
+					if(!(c.userList.pseudoIsIn(Test)) && !(c.mainUser.getPseudo().equals(Test.getPseudo())))
+					{	
+						c.userList.addToConnectedUser(Test);
+					}
 				}
 				ListWindows.PrintConnectedUser(c);
 			}

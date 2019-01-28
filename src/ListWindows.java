@@ -108,7 +108,7 @@ public class ListWindows {
 			JButton current_button = new JButton();
 			button_chat.add(current_button);
 			if(u.isDistant())
-				current_button.setText(u.getPseudo() + "- DISTANT @ " + u.getAddress().toString());			
+				current_button.setText(u.getPseudo() + "- DISTANT");			
 			else
 				current_button.setText(u.getPseudo() + "- LOCAL");	
 			
