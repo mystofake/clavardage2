@@ -26,6 +26,7 @@ public class Controler {
 	public User mainUser;
 	public UserList userList;
 	public boolean presence_server;
+	public String addPresenceServer;
 
 
 	

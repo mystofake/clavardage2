@@ -14,14 +14,23 @@ import java.awt.GridLayout;
 
 import javax.swing.JTextField;
 import javax.swing.JEditorPane;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import java.awt.Color;
 import java.awt.SystemColor;
@@ -33,7 +42,7 @@ import java.awt.event.*;
 public class ConnexionWindows {
 
 	private JFrame frame;
-	private JTextField textField;
+	private JTextField textField, ServerIP;
 	private JTextPane txtpnNetchatV;
 	private Controler c;
 	private JCheckBox RemoteClientCheckBox;
@@ -69,38 +78,66 @@ public class ConnexionWindows {
 				{
 					c.mainUser=new User(textField.getText().substring(0, 1).toUpperCase().concat(textField.getText().substring(1)), InetAddress.getByName("localhost"));
 					c.presence_server = RemoteClientCheckBox.isSelected();
+					c.addPresenceServer = ServerIP.getText();
 				}
 				catch(Exception e) {}
 				c.ready=false;
 				frame.dispose();
 			}
 		});
-		btnNewButton.setBounds(173, 180, 105, 30);
+		btnNewButton.setBounds(173, 235, 105, 30);
 		frame.getContentPane().add(btnNewButton);
 		
 		textField = new JTextField();
-		textField.setBounds(95, 98, 251, 41);
+		textField.setBounds(95, 80, 251, 41);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JTextArea txtrPseudo = new JTextArea();
-		txtrPseudo.setBackground(SystemColor.control);
+		//txtrPseudo.setBackground(SystemColor.control);
 		txtrPseudo.setEditable(false);
-		txtrPseudo.setText("Pseudo :");
-		txtrPseudo.setBounds(95, 65, 60, 22);
+		txtrPseudo.setText("Username");
+		txtrPseudo.setBounds(95, 60, 100, 22);
+		txtrPseudo.setOpaque(false);
+		txtrPseudo.setFont(new Font("Times", Font.BOLD, 15));
 		frame.getContentPane().add(txtrPseudo);
 		
 		txtpnNetchatV = new JTextPane();
-		txtpnNetchatV.setFont(new Font("Tahoma", Font.BOLD, 19));
-		txtpnNetchatV.setBackground(SystemColor.control);
+		txtpnNetchatV.setFont(new Font("Times", Font.BOLD, 19));
+		
+		//txtpnNetchatV.setBackground(SystemColor.control);
 		txtpnNetchatV.setText("NETCHAT v1.0");
 		txtpnNetchatV.setEditable(false);
-		txtpnNetchatV.setBounds(95, 11, 245, 43);
+		txtpnNetchatV.setBounds(95, 11, 300, 43);
+		txtpnNetchatV.setOpaque(false);
+		
+		StyledDocument doc = txtpnNetchatV.getStyledDocument();
+		SimpleAttributeSet center = new SimpleAttributeSet();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc.setParagraphAttributes(0, doc.getLength(), center, false);
+		
 		frame.getContentPane().add(txtpnNetchatV);
 		
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.setBounds(95, 140, 300, 80);
+		TitledBorder title = BorderFactory.createTitledBorder("Presence Server");
+		panel.setBorder(title);
+		
 		RemoteClientCheckBox = new JCheckBox("Use presence server", false);
-		RemoteClientCheckBox.setBounds(95, 140, 200, 20);
-		frame.getContentPane().add(RemoteClientCheckBox);
+		RemoteClientCheckBox.setBorder(BorderFactory.createEmptyBorder(7, 10, 7, 0));
+		panel.add(RemoteClientCheckBox,BorderLayout.NORTH);
+		
+		
+		JLabel label = new JLabel("Server IP");
+		label.setBorder(BorderFactory.createEmptyBorder(0, 10, 7, 10));
+		panel.add(label,BorderLayout.WEST);
+		
+		ServerIP = new JTextField();
+		ServerIP.setText("127.0.0.1");
+		panel.add(ServerIP,BorderLayout.CENTER);
+		frame.getContentPane().add(panel);
+		
+		//frame.getContentPane().add(ServerIP);
 
 		//RemoteClientCheckBox.setSelected(false);
 		/*RemoteClientCheckBox.addItemListener(new ItemListener() {

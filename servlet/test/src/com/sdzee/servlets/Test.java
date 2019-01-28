@@ -75,9 +75,24 @@ public class Test extends HttpServlet {
 		else if(request.getParameter("status").equals("Check"))
 		{
 
-			for(UserPresence u1 : ConnectedUser)
+			for(UserPresence up : ConnectedUser)
 			{
-				out.println(u1);
+				StringUserList = StringUserList.concat(up + "&&");
+
+			}
+			
+			out.println(StringUserList);
+
+		
+		}
+		
+		else if(request.getParameter("status").equals("Deconnect"))
+		{
+
+			for(int i = 0; i<ConnectedUser.size();i++)
+			{
+				if(ConnectedUser.get(i).getUserName().equals(request.getParameter("user")))
+					ConnectedUser.remove(i);
 			}
 		
 		}
