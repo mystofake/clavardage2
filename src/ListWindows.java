@@ -139,11 +139,25 @@ public class ListWindows {
 		for(JButton jb : button_chat)
 		{
 			System.out.println(jb.getText());
-			if(jb.getText().equals(u.getPseudo()))
+			if(u.isDistant())
 			{
-				jb.remove(frame);
-				jb.setVisible(false);
+				if(jb.getText().equals(u.getPseudo() + "- DISTANT"))
+				{
+					jb.remove(frame);
+					jb.setVisible(false);
+				}
 			}
+			
+			else 
+			{
+				if(jb.getText().equals(u.getPseudo() + "- LOCAL"))
+				{
+					jb.remove(frame);
+					jb.setVisible(false);
+				}
+			}
+			
+			
 		}
 		
 	}
