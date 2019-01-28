@@ -52,6 +52,7 @@ public class Controler {
 		System.out.println("Set IP : " + mainUser.getAddress());
 		NetworkEvent NwEv = new NetworkEvent(mainUser,"Connexion");
 		
+		System.out.println(mainUser.getAddress());
 		byte data[] = NetworkFunctions.convertToBytes(NwEv);
 		DatagramPacket toSend =new DatagramPacket(data,data.length,Adressage.getBroad(mainUser.getAddress()),multiCastPort);
 		dSock2.send(toSend);
@@ -87,7 +88,10 @@ public class Controler {
 		try		{
 			this.deconnect();
 			this.mainUser = new User(pseudo);
+			this.mainUser.SetAddress(Adressage.getIP());
 			this.connected = true;
+			System.out.println("Bug");
+
 			this.init();
 		}
 		catch (Exception e)		{

@@ -49,11 +49,12 @@ public class Test extends HttpServlet {
 				// Envoi du port sur lequel l'utilisateur doit se connecter
 				out.println(port);
 				out.close();
-				
+
+				ConnectedUser.add(u);
+
 				u.setThreadServer(new ThreadServer(port));
 				u.getThreadServer().init();
 				
-				ConnectedUser.add(u);
 				
 				// Envoi de la UserList sous forme de String
 				for(UserPresence up : ConnectedUser)

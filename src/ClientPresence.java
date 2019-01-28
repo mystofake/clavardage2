@@ -29,7 +29,7 @@ public class ClientPresence extends Thread {
 
 	}*/
 	
-	public ClientPresence(Controler c)
+	public ClientPresence(Controler c )
 	{
 		this.c = c;
 	}
