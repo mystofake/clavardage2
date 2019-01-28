@@ -27,7 +27,7 @@ public class Controler {
 	public UserList userList;
 	public boolean presence_server;
 	public String addPresenceServer;
-
+	public ClientPresence cliPresence;
 
 	
 
@@ -77,6 +77,10 @@ public class Controler {
 			dSock1.send(toSend);
 			this.connected = false;
 			dSock1.close();
+			if(this.presence_server)
+			{
+				cliPresence.notifyDeconnexion();
+			}
 			}
 		catch (Exception e)			{
 			System.out.println("Erreur lors de la deconnexion");
@@ -88,15 +92,38 @@ public class Controler {
 	{
 		try		{
 			this.deconnect();
+			if(this.presence_server)
+			{
+				cliPresence.notifyDeconnexion();
+			}
 			this.mainUser = new User(pseudo);
 			this.mainUser.SetAddress(Adressage.getIP());
 			this.connected = true;
-			System.out.println("Bug");
+
 
 			this.init();
+			if(this.presence_server)
+			{
+				this.initCliPresence();
+			}
 		}
 		catch (Exception e)		{
 			System.out.println("Erreur lors du changement de pseudo");
+		}
+	}
+	
+	public void initCliPresence()
+	{
+		
+		cliPresence = new ClientPresence(this);
+		try {
+			cliPresence.notifyConnexion();
+			cliPresence.start();
+		}
+		catch (IOException e)
+		{
+			System.out.println(e.getMessage());
+			WarningWindow.ShowWarn("Can't contact presence server");
 		}
 	}
 	

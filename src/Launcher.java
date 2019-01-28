@@ -26,16 +26,7 @@ public class Launcher {
 		
 		if(c.presence_server)
 		{
-			ClientPresence cliPresence = new ClientPresence(c);
-			try {
-				cliPresence.notifyConnexion();
-				cliPresence.start();
-			}
-			catch (IOException e)
-			{
-				System.out.println(e.getMessage());
-				WarningWindow.ShowWarn("Can't contact presence server");
-			}
+			c.initCliPresence();
 		}
 		
 		Database.createDB(c);

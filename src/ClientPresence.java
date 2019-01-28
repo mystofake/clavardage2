@@ -158,8 +158,7 @@ public class ClientPresence extends Thread {
 			// Retire les utilisateurs disparus
 			for(User u : c.userList.connectedUser)
 			{
-				System.out.println(u.getPseudo());
-				if(!ReceivedUserList.pseudoIsIn(u))
+				if(!ReceivedUserList.pseudoIsIn(u) && u.isDistant())
 				{
 					c.userList.removeToConnectedUser(u);
 					ListWindows.RemoveConnectedUser(u);
