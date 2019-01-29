@@ -3,13 +3,13 @@ DJEBAR - TISSOT
 4IR SC
 2018-2019
 
-#### Pour lancer l'application : 
+#### Pour lancer l'application (au choix) :  
 
   * Lancer le fichier JAR présent dans le dossier exec 
-  
+ 
   * Dans Eclipse : Lancer la classe Launcher 
   
-#### Pour le serveur de présence : 
+#### Pour lancer le serveur de présence : 
   * Dans Eclipse : Lancer le projet Test sur un serveur Tomcat
 
 
