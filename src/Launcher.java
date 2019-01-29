@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 //Classe racine � lancer pour d�marrer le programme de clavardage.
 
@@ -18,6 +20,8 @@ public class Launcher {
             }}));System.out.println("");			}
 		System.setOut(original);
 		
+		
+
 		c.mainUser.SetAddress(Adressage.getIP());
 		
 		
