@@ -5,14 +5,14 @@ DJEBAR - TISSOT
 
 Pour lancer l'application : 
   Lancer le fichier JAR présent dans le dossier exec
-  Lancer la classe Launcher dans Eclipse
+  Dans Eclipse : Lancer la classe Launcher 
   
 Pour le serveur de présence : 
-  
+  Dans Eclipse : Lancer le projet Test sur un serveur Tomcat
 
-------
-Plus de détails de fonctionnement dans le dossier doc
-------
+
+Plus de détails de fonctionnement dans la documentation présente dans le dossier doc
+
 
 
    
