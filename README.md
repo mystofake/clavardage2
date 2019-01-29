@@ -3,19 +3,18 @@ DJEBAR - TISSOT
 4IR SC
 2018-2019
 
-A utiliser dans Eclipse
-Lancer la classe Launcher
+Pour lancer l'application : 
+  Lancer le fichier JAR présent dans le dossier exec
+  Lancer la classe Launcher dans Eclipse
+  
+Pour le serveur de présence : 
+  
 
-Fonctionnalités : 
-  * Chat via TCP - Fin d'une discussion -  
-  * Découverte des utilisateurs via UDP
-  * Vérification du username et changement du username
-  * Interface graphique
+------
+Plus de détails de fonctionnement dans le dossier doc
+------
 
-Notes : 
-  * Ne fonctionne qu'avec les réseaux adressés en 192.168.* ou 10.1.* 
-    Pour faire fonctionner avec d'autres types, il faut modifier la méthode getIP() de la classe Adressage (Ligne  31) ET modifier
-    la méthode getBroad() (ajuster le masque)
+
    
 
 
