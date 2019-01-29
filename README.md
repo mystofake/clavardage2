@@ -7,7 +7,7 @@ DJEBAR - TISSOT
 
   * Lancer le fichier JAR présent dans le dossier exec 
  
-  * Dans Eclipse : Lancer la classe Launcher 
+  * Dans Eclipse : Ouvrir le projet et Lancer la classe Launcher 
   
 #### Pour lancer le serveur de présence : 
   * Dans Eclipse : Lancer le projet Test sur un serveur Tomcat
